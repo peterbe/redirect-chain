@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 import argparse
 import sys
-from urllib.parse import urlparse
 
 import requests
-from requests.exceptions import RequestException
+from requests.exceptions import RequestException, TooManyRedirects
 
 
 def run(urls):
@@ -22,12 +21,14 @@ def bold(s):
 def run_url(url):
     try:
         r = requests.get(url)
+    except TooManyRedirects as exception:
+        print("⚠️ ", "Too many redirects! Will give up after 30", "🌩")
+        r = exception.response
     except RequestException as exception:
         print("😱 ❌ ⛈", str(exception))
         return 2
-    start = urlparse(url)
+
     for i, response in enumerate(r.history):
-        parsed = urlparse(response.url)
         print(i, i * ">", response.url, bold(response.status_code))
     i += 1
     print(i, i * ">", r.url, bold(r.status_code))
