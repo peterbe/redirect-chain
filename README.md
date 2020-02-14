@@ -14,7 +14,7 @@ Sample output:
 ## Installation
 
 ```bash
-pipx redirect-chain
+pipx install redirect-chain
 redirect-chain http://www.peterbe.com/oc-
 ```
 
