@@ -5,6 +5,16 @@ import sys
 import requests
 from requests.exceptions import RequestException, TooManyRedirects
 
+# class bcolors:
+#     HEADER = '\033[95m'
+#     OKBLUE = '\033[94m'
+#     OKGREEN = '\033[92m'
+#     WARNING = '\033[93m'
+#     FAIL = '\033[91m'
+#     ENDC = '\033[0m'
+#     BOLD = '\033[1m'
+#     UNDERLINE = '\033[4m'
+
 
 def run(urls):
     errors = 0
@@ -18,6 +28,10 @@ def bold(s):
     return "\033[1m{}\033[0m".format(s)
 
 
+def redbold(s):
+    return "\033[91m\033[1m{}\033[0m".format(s)
+
+
 def run_url(url):
     try:
         r = requests.get(url)
@@ -28,10 +42,16 @@ def run_url(url):
         print("😱 ❌ ⛈", str(exception))
         return 2
 
+    i = 0
     for i, response in enumerate(r.history):
         print(i, i * ">", response.url, bold(response.status_code))
     i += 1
-    print(i, i * ">", r.url, bold(r.status_code))
+    print(
+        i,
+        i * ">",
+        r.url,
+        redbold(r.status_code) if r.status_code >= 400 else bold(r.status_code),
+    )
 
 
 def get_parser():

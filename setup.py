@@ -7,7 +7,7 @@ _here = path.dirname(__file__)
 
 setup(
     name="redirect-chain",
-    version="0.2.0",
+    version="0.2.1",
     description="Shows the redirect chain of a URL from start to end",
     long_description=open(path.join(_here, "README.md")).read(),
     long_description_content_type='text/markdown',
